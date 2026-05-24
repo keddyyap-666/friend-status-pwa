@@ -1,0 +1,11 @@
+{
+  "name": "friend-status-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cute friend status PWA prototype.",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "preview": "node scripts/preview.js"
+  }
+}

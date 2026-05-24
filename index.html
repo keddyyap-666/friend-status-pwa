@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friend Status Dashboard</title>
+    <meta name="theme-color" content="#7b4d32" />
+    <meta name="description" content="A cute beige friend status dashboard with a social mood map." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Friend UI" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="stage" aria-label="Friend status app mockup">
+      <section class="app-shell" aria-label="朋友状态仪表盘">
+        <header class="app-header shared-header">
+          <div>
+            <h1 class="home-title">晚上好，<br />KD<span aria-hidden="true">👋</span></h1>
+            <h1 class="friends-title">Friends</h1>
+            <h1 class="map-title">Map</h1>
+            <p class="home-subtitle">今天也有好好生活中 ✨</p>
+            <p class="friends-subtitle">看看朋友们今天过得怎么样 ✨</p>
+            <p class="map-subtitle">朋友们的实时位置，只显示已同意分享的人</p>
+          </div>
+          <div class="top-actions" aria-label="快捷操作">
+            <button class="circle-button" type="button" aria-label="搜索">⌕</button>
+            <button class="circle-button" type="button" aria-label="新增">＋</button>
+          </div>
+        </header>
+
+        <section class="home-content" aria-label="Home dashboard">
+          <div class="left-column">
+            <div class="quick-actions" aria-label="搜索和新增">
+              <button class="circle-button large" type="button" aria-label="搜索">⌕</button>
+              <button class="circle-button large" type="button" aria-label="新增">＋</button>
+            </div>
+
+            <section class="hero-card card">
+              <div class="hero-copy">
+                <span>今日心情分</span>
+                <strong>88%</strong>
+                <p>开心 😊</p>
+                <button class="chat-button" id="chatButton" type="button">找我聊天 💬</button>
+              </div>
+              <div class="play-button" aria-hidden="true"></div>
+              <img class="avatar-image home-avatar" src="assets/avatar.png" alt="KD 的 3D 头像" />
+              <div class="avatar-ground" aria-hidden="true"></div>
+            </section>
+
+            <section class="overview-card card" aria-label="今日概览">
+              <h2>概览</h2>
+              <div class="overview-grid">
+                <article class="stat-card energy-card">
+                  <span class="stat-icon">⚡</span>
+                  <p>今日能量</p>
+                  <strong>72%</strong>
+                  <small>还可以加油！</small>
+                  <button type="button">更新数据</button>
+                </article>
+                <article class="stat-card mood-card">
+                  <span class="stat-icon">☺</span>
+                  <p>今日心情</p>
+                  <strong>88</strong>
+                  <small>心情状态 happy</small>
+                  <button type="button">心情记录</button>
+                </article>
+              </div>
+            </section>
+            <p class="widget-label">我的小组件</p>
+          </div>
+
+          <div class="right-column">
+            <section class="map-card card">
+              <div class="section-title">
+                <h2>今日轨迹</h2>
+                <span>更新于 20:30</span>
+              </div>
+              <div class="soft-map" aria-label="今日轨迹地图">
+                <svg viewBox="0 0 488 520" role="img" aria-labelledby="mapTitle">
+                  <title id="mapTitle">今日轨迹</title>
+                  <path class="river" d="M282 -20 C246 72, 301 124, 251 210 S156 318, 189 560" />
+                  <path class="park park-a" d="M88 20 L172 0 L202 76 L132 112 Z" />
+                  <path class="park park-b" d="M352 278 L496 236 L528 340 L386 378 Z" />
+                  <path class="street wide" d="M-10 86 L505 410" />
+                  <path class="street wide" d="M32 520 L505 42" />
+                  <path class="street" d="M0 214 L480 -6" />
+                  <path class="street" d="M-8 340 L512 126" />
+                  <path class="street" d="M98 -24 L188 536" />
+                  <path class="street" d="M304 -18 L424 526" />
+                  <path class="street thin" d="M-12 34 L468 516" />
+                  <path class="street thin" d="M40 -16 L488 276" />
+                  <path class="street thin" d="M-10 456 L512 198" />
+                  <path class="route-back" d="M214 78 C292 35, 352 52, 368 104 C388 166, 318 198, 322 256 C326 307, 409 303, 410 362 C411 415, 338 430, 308 476 C273 529, 200 490, 220 432 C239 374, 160 374, 120 330 C76 282, 96 231, 114 178 C128 135, 176 99, 214 78 Z" />
+                  <path class="map-route" d="M214 78 C292 35, 352 52, 368 104 C388 166, 318 198, 322 256 C326 307, 409 303, 410 362 C411 415, 338 430, 308 476 C273 529, 200 490, 220 432 C239 374, 160 374, 120 330 C76 282, 96 231, 114 178 C128 135, 176 99, 214 78 Z" />
+                  <g class="route-node" transform="translate(214 78)"><circle r="9"></circle></g>
+                  <g class="route-node" transform="translate(114 178)"><circle r="9"></circle></g>
+                  <g class="route-node" transform="translate(322 256)"><circle r="9"></circle></g>
+                  <g class="route-node" transform="translate(220 432)"><circle r="9"></circle></g>
+                  <g class="map-pin" transform="translate(292 60)"><circle r="36"></circle><text y="10" text-anchor="middle">☕</text></g>
+                  <g class="map-pin" transform="translate(96 290)"><circle r="36"></circle><text y="10" text-anchor="middle">📖</text></g>
+                  <g class="map-pin" transform="translate(405 196)"><circle r="36"></circle><text y="10" text-anchor="middle">💻</text></g>
+                  <g class="map-pin" transform="translate(292 444)"><circle r="36"></circle><text y="10" text-anchor="middle">⌂</text></g>
+                </svg>
+                <div class="map-avatar"><img src="assets/avatar.png" alt="KD 的地图头像" /></div>
+              </div>
+              <div class="metric-row">
+                <div><strong>6.2</strong><span>公里</span></div>
+                <div><strong>10,245</strong><span>步数</span></div>
+                <div><strong>626</strong><span>卡路里</span></div>
+              </div>
+            </section>
+
+            <section class="notes-card card">
+              <h2>今日小记</h2>
+              <ul class="note-list">
+                <li><span><i>☺</i>心情状态</span><strong>开心 😊</strong></li>
+                <li><span><i>▰</i>能量状态</span><strong>72%</strong></li>
+                <li><span><i>☕</i>咖啡摄入</span><strong>2 杯</strong></li>
+                <li><span><i>☁</i>废话输出</span><strong>很多 😂</strong></li>
+                <li><span><i>☆</i>今日关键词</span><strong class="keyword">努力生活中 ✨</strong></li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="friends-layer" aria-label="Friends social layer">
+          <section class="friend-strip" id="friendStrip" aria-label="朋友头像列表"></section>
+          <section class="friend-card-grid" id="friendCards" aria-label="朋友状态卡片"></section>
+          <section class="friends-summary card">
+            <div class="ai-summary">
+              <div class="bot-face" aria-hidden="true"><span></span></div>
+              <div>
+                <h2>AI 今日总结 ✨</h2>
+                <p>KD 今天心情不错，Vivien 需要一点放松，Zhen 看起来有点累。记得给朋友们发一句问候。</p>
+                <button type="button">查看详情 →</button>
+              </div>
+            </div>
+            <div class="place-summary">
+              <h2>今日最常出现地点</h2>
+              <div class="place-map">
+                <div><span>☕</span><strong>奶茶店</strong><small>2 次</small></div>
+                <div><span>🏢</span><strong>公司</strong><small>2 次</small></div>
+                <div><span>🏠</span><strong>家</strong><small>1 次</small></div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="live-map-layer" aria-label="实时朋友地图">
+          <div class="map-toolbar card">
+            <button class="share-location-button" id="shareLocationButton" type="button">Share My Location</button>
+            <label><input id="pauseSharing" type="checkbox" /> pause sharing</label>
+            <label><input id="approxOnly" type="checkbox" checked /> approximate only</label>
+            <label><input id="hideExact" type="checkbox" /> hide exact location</label>
+            <button class="stop-sharing-button" id="stopSharingButton" type="button">stop sharing</button>
+          </div>
+          <div class="leaflet-shell card">
+            <div id="liveMap" aria-label="OpenStreetMap friend locations"></div>
+          </div>
+          <aside class="friend-bottom-sheet" id="friendBottomSheet" aria-live="polite"></aside>
+        </section>
+
+        <nav class="bottom-nav" aria-label="底部导航">
+          <button class="active" type="button" data-tab="home" aria-label="Home"><span class="nav-icon">⌂</span><span class="nav-label">Home</span></button>
+          <button type="button" data-tab="friends" aria-label="Friends"><span class="nav-icon"><span class="friend-logo" aria-hidden="true"><i></i><i></i></span></span><span class="nav-label">Friends</span></button>
+          <button type="button" data-tab="map" aria-label="Map"><span class="nav-icon">⌖</span><span class="nav-label">Map</span></button>
+          <button type="button" data-tab="mood" aria-label="Mood"><span class="nav-icon">☺</span><span class="nav-label">Mood</span></button>
+          <button type="button" data-tab="profile" aria-label="Profile"><span class="nav-icon">♙</span><span class="nav-label">Profile</span></button>
+        </nav>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">KD 现在很适合聊天</div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
