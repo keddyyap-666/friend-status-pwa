@@ -4,6 +4,7 @@ const { execFileSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
+const publicDir = path.join(root, "public");
 
 const requiredFiles = [
   "index.html",
@@ -51,13 +52,18 @@ JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8"));
 execFileSync(process.execPath, ["--check", path.join(root, "app.js")], { stdio: "inherit" });
 execFileSync(process.execPath, ["--check", path.join(root, "sw.js")], { stdio: "inherit" });
 
-fs.rmSync(dist, { recursive: true, force: true });
-fs.mkdirSync(dist, { recursive: true });
+function buildTo(outputDir) {
+  fs.rmSync(outputDir, { recursive: true, force: true });
+  fs.mkdirSync(outputDir, { recursive: true });
 
-for (const file of ["index.html", "styles.css", "app.js", "manifest.json", "sw.js", "vercel.json"]) {
-  copyRecursive(path.join(root, file), path.join(dist, file));
+  for (const file of ["index.html", "styles.css", "app.js", "manifest.json", "sw.js", "vercel.json"]) {
+    copyRecursive(path.join(root, file), path.join(outputDir, file));
+  }
+
+  copyRecursive(path.join(root, "assets"), path.join(outputDir, "assets"));
 }
 
-copyRecursive(path.join(root, "assets"), path.join(dist, "assets"));
+buildTo(dist);
+buildTo(publicDir);
 
-console.log("Build complete: dist/");
+console.log("Build complete: dist/ and public/");
