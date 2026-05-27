@@ -213,10 +213,23 @@ function initLiveMap() {
     attributionControl: false,
   }).setView([3.1516, 101.7122], 15);
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  const fallbackTiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors",
+  });
+
+  const pastelTiles = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
     maxZoom: 19,
     attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
   }).addTo(liveMap);
+
+  let fallbackStarted = false;
+  pastelTiles.on("tileerror", () => {
+    if (fallbackStarted) return;
+    fallbackStarted = true;
+    liveMap.removeLayer(pastelTiles);
+    fallbackTiles.addTo(liveMap);
+  });
 
   L.control.zoom({ position: "topright" }).addTo(liveMap);
   L.control.attribution({ position: "bottomright", prefix: false }).addAttribution("&copy; OpenStreetMap contributors &copy; CARTO").addTo(liveMap);
